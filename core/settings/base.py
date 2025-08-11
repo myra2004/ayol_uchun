@@ -25,6 +25,7 @@ LOCAL_APPS = [
     "apps.users",
     "apps.courses",
     "apps.news",
+    "apps.payment",
 ]
 
 EXTERNAL_APPS = [
