@@ -73,8 +73,11 @@ class PaylovAPIView(APIView):
         """
         error, code = PaylovClient(self.params).check_transaction()
 
-        if error and code == STATUS_CODES["ORDER_NOT_FOUND"]:
-            return dict(result=dict(status=code, statusText=STATUS_TEXT["ERROR"]))
+        if error:
+            if code == STATUS_CODES["ORDER_NOT_FOUND"]:
+                return dict(result=dict(status=code, statusText=STATUS_TEXT["ERROR"]))
+            elif code == STATUS_CODES["INVALID_AMOUNT"]:
+                return dict(result=dict(status=code, statusText=STATUS_TEXT["ERROR"]))
         print(">>> Check transaction is successful")
         return dict(result=dict(status=code, statusText=STATUS_TEXT["SUCCESS"]))
 

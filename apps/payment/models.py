@@ -135,22 +135,22 @@ class Transaction(BaseModel):
         if not self.remote_id and transaction_id:
             self.remote_id = str(transaction_id)
         self.provider = provider
-        self.is_paid = True
+        self.paid_at = datetime.datetime.now()
         self.status = TransactionStatus.COMPLETED
 
         try:
             with transaction.atomic():
                 self.save(
                     update_fields=[
-                        "is_paid",
+                        "paid_at",
                         "status",
                         "remote_id",
                         "provider",
                     ]
                 )
                 self.order.status = OrderStatus.COMPLETED
-                self.order.is_paid = self.is_paid
-                self.order.save(update_fields=["is_paid"])
+                self.order.is_paid = True if self.paid_at else False
+                self.order.save(update_fields=["is_paid", "status"])
         except Exception:
             raise
 

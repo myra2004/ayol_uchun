@@ -18,7 +18,7 @@ def get_credentials() -> dict[str, Any | None]:
             - PAYLOV_SUBSCRIPTION_KEY: The subscription key for Paylov.
     """
 
-    paylov_provider = Providers.objects.filter(key="paylov").last()
+    paylov_provider = Provider.objects.filter(key="paylov").last()
     paylov_creds = ProviderCredentials.objects.filter(provider=paylov_provider).all()
 
     paylov_api_key = getattr(
@@ -35,15 +35,6 @@ def get_credentials() -> dict[str, Any | None]:
     )
     paylov_redirect_url = getattr(
         paylov_creds.filter(key="PAYLOV_REDIRECT_URL").last(), "value", None
-    )
-
-    print(
-        ">>> Paylov credentials: ",
-        paylov_api_key,
-        paylov_username,
-        paylov_password,
-        paylov_subscription_key,
-        paylov_redirect_url,
     )
 
     return {
