@@ -104,7 +104,7 @@ class PaylovClient:
         if merchant_key is None:
             raise ValueError("Credentials not found")
 
-        amount = int(transaction.amount)
+        amount = int(transaction.amount) * 100
         query = f"merchant_id={merchant_key}&amount={amount}&account.order_id={transaction.id}&return_url={return_url}"
         encode_params = base64.b64encode(query.encode("utf-8"))
         encode_params = str(encode_params, "utf-8")

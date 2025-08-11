@@ -33,6 +33,7 @@ EXTERNAL_APPS = [
     'jazzmin',
     'rest_framework',
     'drf_yasg',
+    "rest_framework_simplejwt"
 ]
 
 INSTALLED_APPS = EXTERNAL_APPS + DJANGO_APPS + LOCAL_APPS
@@ -163,3 +164,27 @@ AES_KEY = os.getenv("AES_KEY", "")
 # RECAPTCHA
 RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY")
+
+
+# REST_FRAMEWORK settings
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_THROTTLE_CLASSES': [],
+    'DEFAULT_THROTTLE_RATES': {},
+    'UNAUTHENTICATED_USER': None,
+    'UNAUTHENTICATED_TOKEN': None,
+}
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    },
+}

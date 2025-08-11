@@ -1,31 +1,25 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-# from django.contrib.auth.forms import AuthenticationForm
 from django.urls import include, path
-# from django_recaptcha import fields
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 from .schema import swagger_urlpatterns
 
-
-# class LoginForm(AuthenticationForm):
-#     captcha = fields.ReCaptchaField()
-#
-#     def clean(self):
-#         captcha = self.cleaned_data.get("captcha")
-#         if not captcha:
-#             return None
-#         return super().clean()
-#
-#
-# admin.site.login_form = LoginForm
-# admin.site.login_template = "login.html"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/common/", include("apps.common.urls", namespace="common")),
     path("api/v1/payments/", include("apps.payment.urls", namespace="payment")),
+
     path('i18n/', include('django.conf.urls.i18n')),
+
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 urlpatterns += swagger_urlpatterns

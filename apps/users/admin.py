@@ -45,6 +45,7 @@ class UserAdmin(BaseUserAdmin):
                     "is_confirmed",
                     "is_staff",
                     "is_superuser",
+                    'is_deleted',
                     "groups",
                     "user_permissions",
                 ),

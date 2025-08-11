@@ -8,7 +8,6 @@ class UserManager(BaseUserManager):
         user = self.model(
             phone_number=phone_number,
             username=username,
-            password=password,
             **extra_fields,
         )
         user.set_password(password)
