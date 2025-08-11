@@ -1,4 +1,6 @@
-from django.db import models
+import datetime
+
+from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 
 from apps.common.models import BaseModel
@@ -114,3 +116,58 @@ class Transaction(BaseModel):
     class Meta:
         verbose_name = _('Transaction')
         verbose_name_plural = _('Transactions')
+
+    @property
+    def get_payment_url(self):
+        payment_link = None
+        if self.provider.name == ProviderChoices.PAYLOV:
+            from apps.payment.paylov.client import PaylovClient
+
+            payment_link = PaylovClient.create_payment_link(self)
+
+        return payment_link
+
+    def apply_transaction(
+            self,
+            provider=None,
+            transaction_id: str | None = None,
+    ):
+        if not self.remote_id and transaction_id:
+            self.remote_id = str(transaction_id)
+        self.provider = provider
+        self.is_paid = True
+        self.status = TransactionStatus.COMPLETED
+
+        try:
+            with transaction.atomic():
+                self.save(
+                    update_fields=[
+                        "is_paid",
+                        "status",
+                        "remote_id",
+                        "provider",
+                    ]
+                )
+                self.order.status = OrderStatus.COMPLETED
+                self.order.is_paid = self.is_paid
+                self.order.save(update_fields=["is_paid"])
+        except Exception:
+            raise
+
+        return self
+
+    def cancel_transaction(self, reason):
+        self.cancelled_at = datetime.datetime.now()
+        self.status = TransactionStatus.CANCELLED
+        self.extra = {"payme_cancel_reason": reason}
+        self.save(
+            update_fields=[
+                "cancelled_at",
+                "status",
+            ]
+        )
+
+        self.order.paid_at = None
+        self.order.save(update_fields=["is_paid"])
+
+        return self

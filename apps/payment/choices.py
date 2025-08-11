@@ -20,4 +20,5 @@ class TransactionStatus(TextChoices):
     PROCESSING = ('processing', _('Processing'))
     COMPLETED = ('completed', _('Completed'))
     FAILED = ('failed', _('Failed'))
+    CANCELED = ('canceled', _('Canceled'))
     REFUNDED = ('refunded', _('Refunded'))
