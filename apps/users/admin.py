@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from apps.users.models import User, Interest, UserCourse, UserWebinar
+from .actions import deactivate_users
 
 
 @admin.register(User)
@@ -18,6 +19,7 @@ class UserAdmin(BaseUserAdmin):
         "last_name",
     )
     ordering = ("phone_number",)
+    actions = [deactivate_users]
 
     fieldsets = (
         (None, {"fields": ("phone_number", "username", "password")}),
