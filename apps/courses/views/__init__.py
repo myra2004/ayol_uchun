@@ -16,3 +16,7 @@ from .WebinarDelete import WebinarDeleteAPIView
 from .WebinarUpdate import WebinarUpdateAPIView
 from .CourseCreate import CourseCreatAPIView
 from .WebinarCreate import WebinarCreatAPIView
+from .ModuleList import ModuleListAPIVIew
+from .ModuleDelete import ModuleDeleteAPIView
+from .ModuleUpdate import ModuleUpdateAPIView
+from .ModuleCreate import ModuleCreatAPIView

@@ -13,4 +13,4 @@ class CommentCreateSerializer(ModelSerializer):
             'rating',
         ]
 
-        read_only_fields = ['user', 'course', 'webinar', 'text', 'rating']
+        # read_only_fields = ['user', 'course', 'webinar', 'text', 'rating']

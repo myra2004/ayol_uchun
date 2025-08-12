@@ -3,3 +3,4 @@ from .WebinarCreate import WebinarCreateSerializer
 from .CategoryCreate import CategoryCreateSerializer
 from .LessonCreate import LessonCreateSerializer
 from .CommentCreate import CommentCreateSerializer
+from .Module import ModuleSerializer

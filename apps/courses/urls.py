@@ -3,6 +3,9 @@ from django.urls import path
 from apps.courses.views import *
 
 
+app_name = "courses"
+
+
 urlpatterns = [
     # Course
     path('course/list/', CourseListAPIVIew.as_view(), name='course-list'),
@@ -31,4 +34,10 @@ urlpatterns = [
     path('comment/list/', CommentListAPIVIew.as_view(), name='comment-list'),
     path('comment/create/', CommentCreatAPIView.as_view(), name='comment-create'),
     path('comment/delete/<int:id>/', CommentDeleteAPIView.as_view(), name='delete-comment'),
+
+    # Module
+    path('module/list/', ModuleListAPIVIew.as_view(), name='module-list'),
+    path('module/create/', ModuleCreatAPIView.as_view(), name='module-create'),
+    path('module/delete/<int:id>/', ModuleDeleteAPIView.as_view(), name='delete-module'),
+    path('module/update/<int:id>/', ModuleUpdateAPIView.as_view(), name='update-module'),
 ]
