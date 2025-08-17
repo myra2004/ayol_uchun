@@ -3,6 +3,9 @@ from django.urls import path
 from apps.courses.views import *
 
 
+app_name = "courses"
+
+
 urlpatterns = [
     # Course
     path('course/list/', CourseListAPIVIew.as_view(), name='course-list'),

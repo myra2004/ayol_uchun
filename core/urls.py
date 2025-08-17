@@ -15,7 +15,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/common/", include("apps.common.urls", namespace="common")),
     path("api/v1/users/", include("apps.users.urls", namespace="users")),
-    path("api/v1/payments/", include("apps.payment.urls", namespace="payment")),
+    path("api/v1/payment/", include("apps.payment.urls", namespace="payment")),
     path("api/v1/courses/", include("apps.courses.urls", namespace="courses")),
 
     path('i18n/', include('django.conf.urls.i18n')),

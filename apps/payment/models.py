@@ -186,8 +186,9 @@ class UserCard(BaseModel):
         on_delete=models.CASCADE,
         verbose_name=_('Provider'),
     )
-    cardholder_name = models.CharField(max_length=255, verbose_name=_('Cardholder name'))
-    last_four_digits = models.CharField(max_length=4, verbose_name=_('Last four digits'))
+    cardholder_name = models.CharField(max_length=255, verbose_name=_('Cardholder name'), null=True, blank=True)
+    last_four_digits = models.CharField(max_length=4, verbose_name=_('Last four digits'), null=True, blank=True)
+    brand = models.CharField(max_length=255, verbose_name=_('Brand'), null=True, blank=True)
     expire_month = models.CharField(max_length=2, verbose_name=_('Expire month'))
     expire_year = models.CharField(max_length=4, verbose_name=_('Expire year'))
     is_confirmed = models.BooleanField(default=False, verbose_name=_('Is confirmed'))
