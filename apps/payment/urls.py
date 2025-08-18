@@ -4,6 +4,9 @@ from apps.payment.views import (
     OrderCreateAPIView,
     AddUserCardAPIView,
     ConfirmUserCardAPIView,
+    DeleteUserCardAPIView,
+    ListUserCardsAPIView,
+    GetSingleUserCardAPIView,
 )
 
 app_name = "payment"
@@ -13,6 +16,9 @@ urlpatterns = [
     path("order/create/", OrderCreateAPIView.as_view(), name="create-order"),
     path("usercard/add/", AddUserCardAPIView.as_view(), name="add-usercard"),
     path("usercard/confirm/", ConfirmUserCardAPIView.as_view(), name="confirm-usercard"),
+    path("usercard/list/", ListUserCardsAPIView.as_view(), name="list-usercards"),
+    path("usercard/delete/", DeleteUserCardAPIView.as_view(), name="delete-usercard"),
+    path("usercard/single/", GetSingleUserCardAPIView.as_view(), name="single-usercard"),
 
     # Payment Provider callbacks
     path("paylov/", include("apps.payment.paylov.urls", namespace="paylov")),

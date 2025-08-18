@@ -203,7 +203,18 @@ class PaylovClient:
 
     def get_user_cards(self, user_id: str) -> tuple[bool, dict]:
         query_params = {"userId": str(user_id)}
-        success, response_data = self.api_request("GET_CARDS", params=query_params)
+        success, response_data = self.send_request("GET_CARDS", params=query_params)
+
+        if success:
+            return success, response_data
+
+        error_code = response_data.get("error", {"code": "unknown_error"})["code"]
+        return self.get_error_response(error_code)
+
+
+    def get_single_user_card(self, user_id: str) -> tuple[bool, dict]:
+        query_params = {"userId": str(user_id)}
+        success, response_data = self.send_request("GET_SINGLE_CARD", params=query_params)
 
         if success:
             return success, response_data
@@ -219,7 +230,7 @@ class PaylovClient:
             raise NotFound("User card not found", code="card_not_found")
 
         query_param = {"userCardId": card.card_id}
-        success, response_data = self.api_request("DELETE_CARD", params=query_param)
+        success, response_data = self.send_request("DELETE_CARD", params=query_param)
 
         if success:
             card.soft_delete()
