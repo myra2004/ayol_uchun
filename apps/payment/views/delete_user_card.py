@@ -9,7 +9,7 @@ from apps.payment.serializers import DeleteUserCardSerializer
 
 
 class DeleteUserCardAPIView(APIView):
-    serializer_classes = DeleteUserCardSerializer
+    serializer_class = DeleteUserCardSerializer
     permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
