@@ -1,5 +1,5 @@
 JAZZMIN_SETTINGS = {
-    "site_title": "Open Cloud Admin",
+    "site_title": "Ayol Uchun Admin",
     "site_header": "Open Cloud",
     "site_logo_classes": "img-circle",
     "welcome_sign": "Welcome to the Open Cloud Admin",
