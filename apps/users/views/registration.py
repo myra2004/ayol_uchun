@@ -5,7 +5,6 @@ from rest_framework import status
 
 from apps.users.services.email_send import send_email
 from apps.users.serializers.Registration import RegisterSerializer, VerifyEmailSerializer
-from apps.users.models import User
 
 
 class RegisterView(APIView):

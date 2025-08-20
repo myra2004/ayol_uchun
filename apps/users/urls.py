@@ -5,6 +5,9 @@ from apps.users.views import *
 app_name = "users"
 
 
+app_name = "users"
+
+
 urlpatterns = [
     path('registration', RegisterView.as_view(), name='registration'),
     path('verify-email/', VerifyEmailView.as_view(), name='verify-email'),

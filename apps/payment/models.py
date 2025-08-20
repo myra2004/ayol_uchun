@@ -85,6 +85,34 @@ class ProviderCredentials(BaseModel):
         verbose_name_plural = _('ProviderCredentials')
 
 
+class UserCard(BaseModel):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='user_cards',
+        verbose_name=_('User'),
+    )
+    card_token = models.CharField(max_length=255, verbose_name=_('Card token'))
+    provider = models.ForeignKey(
+        Provider,
+        on_delete=models.CASCADE,
+        verbose_name=_('Provider'),
+    )
+    cardholder_name = models.CharField(max_length=255, verbose_name=_('Cardholder name'), null=True, blank=True)
+    last_four_digits = models.CharField(max_length=4, verbose_name=_('Last four digits'), null=True, blank=True)
+    brand = models.CharField(max_length=255, verbose_name=_('Brand'), null=True, blank=True)
+    expire_month = models.CharField(max_length=2, verbose_name=_('Expire month'))
+    expire_year = models.CharField(max_length=4, verbose_name=_('Expire year'))
+    is_confirmed = models.BooleanField(default=False, verbose_name=_('Is confirmed'))
+
+    class Meta:
+        verbose_name = _('UserCard')
+        verbose_name_plural = _('UserCards')
+
+    def __str__(self):
+        return f"User Card: {self.id}"
+
+
 class Transaction(BaseModel):
     order = models.ForeignKey(
         Order,
@@ -109,6 +137,14 @@ class Transaction(BaseModel):
         max_digits=10, decimal_places=2, verbose_name=_('Amount'),
     )
     extra = models.JSONField(null=True, blank=True, verbose_name=_('Extra data'))
+    card = models.ForeignKey(
+        UserCard,
+        on_delete=models.SET_NULL,
+        related_name='transactions',
+        verbose_name=_('Card'),
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return f'Transaction: {self.id}'
@@ -131,12 +167,16 @@ class Transaction(BaseModel):
             self,
             provider=None,
             transaction_id: str | None = None,
+            card: UserCard | None = None,
     ):
         if not self.remote_id and transaction_id:
             self.remote_id = str(transaction_id)
         self.provider = provider
         self.paid_at = datetime.datetime.now()
         self.status = TransactionStatus.COMPLETED
+
+        if card:
+            self.card = card
 
         try:
             with transaction.atomic():
@@ -146,6 +186,7 @@ class Transaction(BaseModel):
                         "status",
                         "remote_id",
                         "provider",
+                        "card"
                     ]
                 )
                 self.order.status = OrderStatus.COMPLETED
