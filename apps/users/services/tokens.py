@@ -1,15 +1,15 @@
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
-from django.conf import settings
+from core.constants import TOKEN_EXPIRY_SECONDS
 
 signer = TimestampSigner(salt='password-reset')
 
 
-def generate_email_confirm_token(user):
+def generate_number_confirm_token(user):
     return signer.sign(user.pk)
 
-def verify_email_confirm_token(token):
+def verify_number_confirm_token(token):
     try:
-        unsigned = signer.unsign(token, max_age=settings.TOKEN_EXPIRY_SECONDS)
+        unsigned = signer.unsign(token, max_age=TOKEN_EXPIRY_SECONDS)
         return int(unsigned)
     except (BadSignature, SignatureExpired):
         return None

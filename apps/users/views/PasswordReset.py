@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 
 from apps.users.serializers.PasswordReset import PasswordResetRequestSerializer, PasswordResetConfirmSerializer
-from apps.users.services.email_send import send_email
+from apps.users.services.email_send import send_code
 
 
 class RequestPasswordResetView(APIView):
@@ -14,11 +14,11 @@ class RequestPasswordResetView(APIView):
     )
     def post(self, request):
         serializer = PasswordResetRequestSerializer(data=request.data, context={
-            'send_email': send_email
+            'send_code': send_code
         })
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({'detail': 'Password reset email sent'}, status=status.HTTP_200_OK)
+        return Response({'detail': 'Password reset code sent'}, status=status.HTTP_200_OK)
 
 
 class PasswordResetConfirmAPIView(APIView):

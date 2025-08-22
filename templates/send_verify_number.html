@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <p>Hello the owner of {{ phone_number }},</p>
+    <p>Click the link below to verify your password:</p>
+    <p>
+        <a href="{{ verify_url }}/verify-code/?token={{ token }}">
+            Verify Account
+        </a>
+    </p>
+    <p>This link will expire in 1 hour.</p>
+</body>
+</html>

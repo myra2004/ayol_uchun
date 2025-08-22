@@ -1,4 +1,4 @@
 from .ProfileUpdate import ProfileUpdateAPIView
 from .ProfileDelete import ProfileDeleteAPIView
 from .PasswordReset import PasswordResetConfirmAPIView, RequestPasswordResetView
-from .registration import RegisterView, VerifyEmailView
+from .registration import RegisterView, VerifyAccountView

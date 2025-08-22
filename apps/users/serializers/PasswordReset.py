@@ -2,7 +2,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
 from apps.users.models import User
-from apps.users.services.tokens import generate_email_confirm_token, verify_email_confirm_token
+from apps.users.services.tokens import generate_number_confirm_token, verify_number_confirm_token
 
 
 class PasswordResetRequestSerializer(serializers.Serializer):

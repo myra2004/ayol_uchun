@@ -5,6 +5,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from core.jazzmin_conf import JAZZMIN_SETTINGS # noqa
+from core.constants import CELERY_TASK_TIME_LIMIT, TOKEN_EXPIRY_SECONDS
 
 load_dotenv()
 
@@ -139,7 +140,7 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"{REDIS_HOST}:{REDIS_PORT}",
-        "KEY_PREFIX": "boilerplate",  # todo: you must change this with your project name or something else
+        "KEY_PREFIX": "ayol_uchun",  # todo: you must change this with your project name or something else
     }
 }
 
@@ -153,7 +154,7 @@ CELERY_RESULT_BACKEND = os.getenv(
 CELERY_TIMEZONE = "Asia/Tashkent"
 
 CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_TASK_TIME_LIMIT = CELERY_TASK_TIME_LIMIT
 
 
 # CYPHER CONFIGURATION
@@ -179,8 +180,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
+    'ACCESS_TOKEN_LIFETIME': TOKEN_EXPIRY_SECONDS,
+    'REFRESH_TOKEN_LIFETIME': TOKEN_EXPIRY_SECONDS * 15,
 }
 
 SWAGGER_SETTINGS = {

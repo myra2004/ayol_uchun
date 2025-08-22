@@ -10,7 +10,7 @@ app_name = "users"
 
 urlpatterns = [
     path('registration', RegisterView.as_view(), name='registration'),
-    path('verify-email/', VerifyEmailView.as_view(), name='verify-email'),
+    path('verify-email/', VerifyAccountView.as_view(), name='verify-email'),
 
     path('password-reset/request/', RequestPasswordResetView.as_view(), name='password-reset'),
     path('password-reset/confirm/', PasswordResetConfirmAPIView.as_view(), name='password-reset-confirm'),
