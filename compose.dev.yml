@@ -28,7 +28,9 @@ services:
     restart: always
 
   web:
-    build: ayol_uchun
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: "${PROJECT_NAME}_web"
     ports:
       - "8008:8000"
@@ -54,7 +56,9 @@ services:
           path: pyproject.toml
 
   celery:
-    build: ayol_uchun
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: "${PROJECT_NAME}_celery"
     command: celery -A core worker --beat --scheduler django --loglevel=info
     env_file:

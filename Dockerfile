@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev
 
 # Copy rest of project
-ADD ayol_uchun /app
+ADD ./app
 
 # Finalize install
 RUN --mount=type=cache,target=/root/.cache/uv \
