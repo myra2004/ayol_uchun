@@ -67,16 +67,18 @@ services:
       - redis
       - db
 
-  # flower:
-  #   build: .
-  #   container_name: "${PROJECT_NAME}_flower"
-  #   command: celery -A core.celery --broker="${CELERY_BROKER_URL}" flower --url_prefix=/flower
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - "${FLOWER_PORT:-5555}:5555"
-  #   depends_on:
-  #     - celery
+  flower:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "${PROJECT_NAME}_flower"
+    command: celery -A core.celery --broker="${CELERY_BROKER_URL}" flower --url_prefix=/flower
+    env_file:
+      - .env
+    ports:
+      - "${FLOWER_PORT:-5555}:5555"
+    depends_on:
+      - celery
 
 volumes:
   postgres_data:

@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev
 
 # Copy rest of project
-ADD ./app
+ADD . /app
 
 # Finalize install
 RUN --mount=type=cache,target=/root/.cache/uv \
@@ -32,4 +32,4 @@ COPY --from=builder --chown=app:app /app /app
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Set entrypoint default (Django dev server for local)
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
