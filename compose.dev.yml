@@ -60,7 +60,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: "${PROJECT_NAME}_celery"
-    command: celery -A core worker --beat --scheduler django --loglevel=info
+    command: celery -A core worker --loglevel=info
     env_file:
       - .env
     depends_on:
