@@ -9,14 +9,14 @@ WORKDIR /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     --mount=type=bind,source=uv.lock,target=uv.lock \
-    uv sync --frozen --no-install-project --no-dev
+    uv sync --frozen --no-install-project --group prod
 
 # Copy rest of project
 ADD . /app
 
 # Finalize install
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-dev
+    uv sync --frozen --group prod
 
 
 # Stage 2: Production/Final image

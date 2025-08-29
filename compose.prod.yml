@@ -63,7 +63,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: "${PROJECT_NAME}_flower"
-    command: celery -A core.celery --broker="${CELERY_BROKER_URL}" flower --url_prefix=/flower
+    command: celery -A core worker --beat --scheduler celery.beat:PersistentScheduler  --loglevel=info
     env_file:
       - .env
     ports:
